@@ -21,6 +21,7 @@ const ACCENTS = {
 const NAV = [
   { id: "about",      label: "About" },
   { id: "experience", label: "Experience" },
+  { id: "leadership", label: "Beyond" },
   { id: "projects",   label: "Work" },
   { id: "education",  label: "Education" },
   { id: "contact",    label: "Contact" },
@@ -63,6 +64,43 @@ const EXPERIENCE = [
       "Developed a proof-of-concept invoice payment platform on Ethereum and the XRP Ledger, applying ERC standards to model real-world cross-border financial flows.",
       "Implemented Solidity smart contracts handling invoice issuance, settlement, and on-chain payment confirmation against an Ethereum testnet.",
       "Optimized transaction efficiency by 25% through gas-aware contract refactoring and batched on-chain writes.",
+    ],
+  },
+];
+
+const LEADERSHIP = [
+  {
+    role: "Teaching Assistant — CSE 183: Web Applications",
+    where: "UC Santa Cruz",
+    when: "Spring 2025",
+    bullets: [
+      "Led weekly discussion sections for 100+ students, translating complex concepts into interactive problem-solving sessions.",
+      "Delivered detailed written feedback on assignments, consistently rated highly for clarity and accessibility.",
+    ],
+  },
+  {
+    role: "Group Tutor — STAT 80A: Introduction to Statistics",
+    where: "UC Santa Cruz",
+    when: "Fall 2025",
+    bullets: [
+      "Facilitated collaborative learning for groups of 8-12 students, adapting materials to diverse mathematical backgrounds.",
+    ],
+  },
+  {
+    role: "Course Grader — CSE 180 & 183",
+    where: "UC Santa Cruz",
+    when: "Fall 2024 – Winter 2025",
+    bullets: [
+      "Evaluated 100+ student assignments weekly with constructive feedback on technical accuracy and presentation.",
+    ],
+  },
+  {
+    role: "Community Health Volunteer",
+    where: "Bai Jerbai Wadia Hospital for Children",
+    when: "Sep 2022 – Aug 2023",
+    bullets: [
+      "Worked with underserved populations in Palghar on community health projects covering nutrition, sanitation, and preventive care education.",
+      "Coordinated food and aid distribution during medical camps.",
     ],
   },
 ];
@@ -328,9 +366,42 @@ function Experience() {
   );
 }
 
+function Leadership() {
+  return (
+    <section id="leadership" className="section section--alt" data-screen-label="04 Leadership">
+      <div className="wrap">
+        <div className="reveal">
+          <div className="sec-eyebrow">beyond engineering</div>
+          <h2 className="sec-title">Leadership &amp; Beyond.</h2>
+          <p className="sec-sub">
+            Teaching, mentoring, and community work — the other half of getting things done.
+          </p>
+        </div>
+        <div className="timeline">
+          {LEADERSHIP.map((j) => (
+            <div key={j.role} className="tl-item reveal">
+              <span className="tl-dot" aria-hidden="true"></span>
+              <div className="tl-card">
+                <div className="tl-head">
+                  <span className="tl-role">{j.role}</span>
+                  <span className="tl-when">{j.when}</span>
+                </div>
+                <div className="tl-where">{j.where}</div>
+                <ul className="tl-bullets">
+                  {j.bullets.map((b, i) => <li key={i}>{b}</li>)}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Projects() {
   return (
-    <section id="projects" className="section section--alt" data-screen-label="04 Projects">
+    <section id="projects" className="section" data-screen-label="05 Projects">
       <div className="wrap">
         <div className="reveal">
           <div className="sec-eyebrow">selected work</div>
@@ -518,6 +589,7 @@ function App() {
         <Hero />
         <About />
         <Experience />
+        <Leadership />
         <Projects />
         <Education />
         <Contact />
