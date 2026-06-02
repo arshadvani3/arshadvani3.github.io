@@ -451,7 +451,7 @@ function Education() {
           <div className="sec-eyebrow">studies</div>
           <h2 className="sec-title">Education.</h2>
           <p className="sec-sub">
-            Currently between Santa Cruz hills and a thesis on agentic routing.
+            Building the thing that builds the thing.
           </p>
         </div>
         <div className="edu-grid">
