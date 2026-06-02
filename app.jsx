@@ -323,17 +323,16 @@ function About() {
               Shipped backend at <a href="#experience">BigShorts</a> (early-stage startup) and interned as a Data Science Intern at LTIMindtree.
             </p>
             <p>Trying to figure out how to make AI systems that actually work.</p>
-
-            <div className="skills-block">
-              {SKILLS.map((s) => (
-                <div key={s.label} className="skill-cat">
-                  <h4>{s.label}</h4>
-                  <div className="chips">
-                    {s.items.map((t) => <span key={t} className="chip">{t}</span>)}
-                  </div>
+          </div>
+          <div className="skills-block reveal">
+            {SKILLS.map((s) => (
+              <div key={s.label} className="skill-cat">
+                <h4>{s.label}</h4>
+                <div className="chips">
+                  {s.items.map((t) => <span key={t} className="chip">{t}</span>)}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
