@@ -21,8 +21,8 @@ const ACCENTS = {
 const NAV = [
   { id: "about",      label: "About" },
   { id: "experience", label: "Experience" },
-  { id: "leadership", label: "Beyond" },
   { id: "projects",   label: "Work" },
+  { id: "leadership", label: "Beyond" },
   { id: "education",  label: "Education" },
   { id: "contact",    label: "Contact" },
 ];
@@ -41,10 +41,10 @@ const EXPERIENCE = [
     where: "BigShorts",
     when: "Jun 2025 – Sep 2025",
     bullets: [
-      "Architected a content management backend in Node.js + MySQL serving 10,000+ users: hierarchical series/seasons/episodes with scheduled release logic across 6 JWT-authenticated REST APIs.",
-      "Sub-200ms response times across all endpoints via batch query optimization, platform-specific delivery, and transaction management for concurrent writes.",
-      "Eliminated N+1 queries and applied strategic denormalization to improve DB read performance by 40%, preserving integrity across 4 interconnected tables via app-level soft-delete cascades.",
-      "Deployed a serverless AWS Lambda video pipeline converting 500+ uploads to HLS adaptive bitrate streams via FFmpeg + CloudFront, cutting bandwidth consumption by 35%.",
+      "Built and owned a production LLM assistant on Azure serving 10,000+ users, architecting the full RAG pipeline with an orchestration loop handling tool routing, context management, and fallback retries at sub-2s p95 latency.",
+      "Engineered a two-stage retrieval-plus-validation layer with structured logging and latency tracing, cutting irrelevant responses 60% while driving prompt and chunking iterations that lowered the production hallucination rate.",
+      "Architected a Node.js and MySQL content backend for the same 10,000+ user product across 6 JWT-authenticated REST APIs at sub-200ms, eliminating N+1 queries and applying denormalization to improve read performance 40%.",
+      "Deployed a serverless AWS Lambda video pipeline converting 500+ uploads to HLS adaptive bitrate streams via FFmpeg and CloudFront CDN, cutting bandwidth consumption 35%.",
     ],
   },
   {
@@ -159,7 +159,7 @@ const PROJECTS = [
 
 const EDUCATION = [
   {
-    when: "Expected Jun 2026",
+    when: "Jun 2026",
     where: "UC Santa Cruz",
     deg: "M.S. Computer Science",
     gpa: "GPA · 3.50 / 4.0",
@@ -277,7 +277,7 @@ function Hero() {
       <div className="wrap hero-inner">
         <div className="hero-prelude">
           <span className="pulse" aria-hidden="true"></span>
-          <span>open to new-grad AI/ML & SWE roles · June 2026</span>
+          <span>open to full-time AI/ML & SWE roles · available now</span>
         </div>
         <h1>
           <span className="line">Hi, I'm Arsh Advani.</span>
@@ -312,7 +312,7 @@ function Hero() {
           </div>
           <div className="hm">
             <span className="hm-l">// available</span>
-            <span className="hm-v">Graduating June '26</span>
+            <span className="hm-v">Graduated June 2026 — available full-time immediately</span>
           </div>
         </div>
       </div>
@@ -328,7 +328,7 @@ function About() {
           <div className="about-body reveal">
             <div className="sec-eyebrow">beyond the code</div>
             <h2 className="sec-title">A bit about me.</h2>
-            <p>Master's student at UC Santa Cruz, graduating June 2026.</p>
+            <p>M.S. in Computer Science from UC Santa Cruz, June 2026.</p>
             <p>
               I spend most of my time thinking about what happens after you call
               the model: how agents hand off work, catch their own mistakes, and
@@ -392,7 +392,7 @@ function Experience() {
 
 function Leadership() {
   return (
-    <section id="leadership" className="section section--alt" data-screen-label="04 Leadership">
+    <section id="leadership" className="section" data-screen-label="05 Leadership">
       <div className="wrap">
         <div className="reveal">
           <div className="sec-eyebrow">beyond engineering</div>
@@ -425,7 +425,7 @@ function Leadership() {
 
 function Projects() {
   return (
-    <section id="projects" className="section" data-screen-label="05 Projects">
+    <section id="projects" className="section section--alt" data-screen-label="04 Projects">
       <div className="wrap">
         <div className="reveal">
           <div className="sec-eyebrow">selected work</div>
@@ -532,7 +532,7 @@ function Contact() {
               <span className="accent">Let's build.</span>
             </h2>
             <p>
-              Graduating June 2026, looking for full-time new-grad roles in AI/ML and SWE.
+              Graduated June 2026, looking for full-time new-grad roles in AI/ML and SWE — available immediately.
               If you're building something ambitious and need someone who can ship across the stack, reach out.
             </p>
             <div className="socials">
@@ -612,8 +612,8 @@ function App() {
         <Hero />
         <About />
         <Experience />
-        <Leadership />
         <Projects />
+        <Leadership />
         <Education />
         <Contact />
       </main>
