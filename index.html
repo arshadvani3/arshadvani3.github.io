@@ -5,13 +5,26 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Arsh Advani — MSCS @ UCSC, AI Systems Engineer</title>
 <meta name="description" content="Portfolio of Arsh Advani — M.S. Computer Science @ UC Santa Cruz, building agentic systems, production RAG, and the infra behind them." />
+<link rel="canonical" href="https://arshadvani3.github.io/" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<meta name="theme-color" content="#0a0a0c" />
+
+<meta property="og:title" content="Arsh Advani — AI Systems Engineer" />
+<meta property="og:description" content="M.S. Computer Science @ UC Santa Cruz, building agentic systems, production RAG, and the infra behind them." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://arshadvani3.github.io/" />
+<meta property="og:image" content="https://arshadvani3.github.io/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Arsh Advani — AI Systems Engineer" />
+<meta name="twitter:description" content="M.S. Computer Science @ UC Santa Cruz, building agentic systems, production RAG, and the infra behind them." />
+<meta name="twitter:image" content="https://arshadvani3.github.io/og.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
 <style>
@@ -349,42 +362,6 @@
   }
   @media (max-width: 880px) { .about-grid { grid-template-columns: 1fr; } }
 
-  .about-photo {
-    position: relative;
-    aspect-ratio: 4 / 5;
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: linear-gradient(135deg, var(--accent-soft), var(--bg-alt));
-    border: 1px solid var(--line);
-  }
-  .about-photo image-slot {
-    width: 100%; height: 100%;
-    --is-bg: transparent;
-    --is-fg: var(--fg-3);
-    --is-border: transparent;
-  }
-  .about-photo .badge {
-    position: absolute;
-    left: 16px; bottom: 16px;
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 8px 14px 8px 12px;
-    background: rgba(10, 10, 12, 0.72);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-pill);
-    font-size: 12px;
-    color: #10b981;
-    font-weight: 500;
-  }
-  .about-photo .badge .pulse {
-    width: 7px; height: 7px; border-radius: 50%; background: #10b981; position: relative;
-  }
-  .about-photo .badge .pulse::after {
-    content: ""; position: absolute; inset: -4px;
-    border-radius: 50%; border: 1.5px solid #10b981;
-    animation: ring 2s ease-out infinite;
-  }
-
   .about-body p {
     color: var(--fg-3);
     font-size: 18px;
@@ -532,18 +509,20 @@
   .art-1 { background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 50%, #818cf8 100%); }
   .art-2 { background: linear-gradient(135deg, #042f2e 0%, #0f766e 50%, #5eead4 100%); }
   .art-3 { background: linear-gradient(135deg, #500724 0%, #be185d 50%, #f9a8d4 100%); }
+  .art-4 { background: linear-gradient(135deg, #451a03 0%, #d97706 50%, #fcd34d 100%); }
+  .art-5 { background: linear-gradient(135deg, #083344 0%, #0e7490 50%, #67e8f9 100%); }
 
-  /* Bento layout (3 projects) */
+  /* Bento layout (5 projects) */
   .proj:nth-child(1) { grid-column: span 12; }
-  .proj:nth-child(2), .proj:nth-child(3) { grid-column: span 6; }
+  .proj:nth-child(n + 2) { grid-column: span 6; }
   @media (min-width: 960px) {
     .proj:nth-child(1) { grid-column: span 7; grid-row: span 2; }
-    .proj:nth-child(2) { grid-column: span 5; }
-    .proj:nth-child(3) { grid-column: span 5; }
+    .proj:nth-child(2), .proj:nth-child(3) { grid-column: span 5; }
+    .proj:nth-child(4), .proj:nth-child(5) { grid-column: span 6; }
     .proj:nth-child(1) .proj-art { min-height: 340px; }
   }
   @media (max-width: 640px) {
-    .proj:nth-child(2), .proj:nth-child(3) { grid-column: span 12; }
+    .proj:nth-child(n + 2) { grid-column: span 12; }
   }
 
   .proj-body {
@@ -749,7 +728,6 @@
 
   <div id="app"></div>
 
-  <script src="image-slot.js"></script>
   <script type="text/babel" src="tweaks-panel.jsx"></script>
   <script type="text/babel" src="app.jsx"></script>
 </body>

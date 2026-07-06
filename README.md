@@ -6,10 +6,11 @@ Personal portfolio site. Single-page, dark, React + inline Babel, no build step.
 
 ```
 portfolio-site/
-├── index.html          ← page shell, all CSS, design tokens
+├── index.html          ← page shell, all CSS, design tokens, SEO/OG meta
 ├── app.jsx             ← all content + components (the file you'll edit most)
 ├── tweaks-panel.jsx    ← in-page tweak controls (accent color, cursor, grain)
-├── image-slot.js       ← <image-slot> web component (unused right now, kept available)
+├── favicon.svg         ← AA monogram browser-tab icon
+├── og.png              ← 1200×630 link-preview image (og:image / twitter:image)
 ├── resume.pdf          ← linked from nav CTA + hero button
 └── README.md
 ```
@@ -32,7 +33,9 @@ Any static host works — there's nothing to compile.
 - **Netlify / Vercel / Cloudflare Pages**: drag-and-drop the folder, or connect the repo. No build command, publish directory = repo root.
 - **Custom domain**: point a CNAME at your host of choice.
 
-> **Production note.** The in-browser Babel transpile costs ~200 ms on first load. If you want it snappier, pre-compile `app.jsx` and `tweaks-panel.jsx` to plain JS once (`npx babel app.jsx -o app.js --presets=@babel/preset-react`) and swap the `<script type="text/babel" src="…jsx">` tags for `<script src="…js">`. Optional — the current setup is perfectly fine for a personal site.
+> **Production note.** The in-browser Babel transpile costs ~200 ms on first load. If you want it snappier, pre-compile `app.jsx` and `tweaks-panel.jsx` to plain JS once (`npx babel app.jsx -o app.js --presets=@babel/preset-react`) and swap the `<script type="text/babel" src="…jsx">` tags for `<script src="…js">`. Optional — the current setup is perfectly fine for a personal site. React itself already loads as the production build.
+
+**Link previews.** `index.html` carries OpenGraph/Twitter meta pointing at `https://arshadvani3.github.io/` and `og.png`. If the site ever moves to a custom domain, update the `og:url`, `og:image`, `twitter:image`, and `canonical` URLs in the `<head>`.
 
 ## Editing with Claude Code
 
@@ -43,7 +46,7 @@ Open the folder in Claude Code and point it at the file(s) below. All content is
 | What you want to change | File | Where |
 |---|---|---|
 | Hero headline ("Hi, I'm Arsh…") | `app.jsx` | `function Hero()` (~line 253) |
-| About copy + photo caption | `app.jsx` | `function About()` (~line 303) |
+| About copy | `app.jsx` | `function About()` (~line 320) |
 | Nav items | `app.jsx` | `const NAV` (~line 21) |
 | Skills chips | `app.jsx` | `const SKILLS` (~line 29) |
 | Work experience entries | `app.jsx` | `const EXPERIENCE` (~line 37) |

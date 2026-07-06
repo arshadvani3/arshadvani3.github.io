@@ -79,20 +79,20 @@ const LEADERSHIP = [
     ],
   },
   {
+    role: "Group Tutor — STAT 80A: Introduction to Statistics",
+    where: "UC Santa Cruz",
+    when: "Fall 2025",
+    bullets: [
+      "Facilitated collaborative learning for groups of 8-12 students, adapting materials to diverse mathematical backgrounds.",
+    ],
+  },
+  {
     role: "Teaching Assistant — CSE 183: Web Applications",
     where: "UC Santa Cruz",
     when: "Spring 2025",
     bullets: [
       "Led weekly discussion sections for 100+ students, translating complex concepts into interactive problem-solving sessions.",
       "Delivered detailed written feedback on assignments, consistently rated highly for clarity and accessibility.",
-    ],
-  },
-  {
-    role: "Group Tutor — STAT 80A: Introduction to Statistics",
-    where: "UC Santa Cruz",
-    when: "Fall 2025",
-    bullets: [
-      "Facilitated collaborative learning for groups of 8-12 students, adapting materials to diverse mathematical backgrounds.",
     ],
   },
   {
@@ -116,28 +116,44 @@ const LEADERSHIP = [
 
 const PROJECTS = [
   {
-    title: "AgentMesh",
-    glyph: "01 — p2p agent routing",
+    title: "MCP Gateway",
+    glyph: "01 — agentic orchestration",
     art: "art-1",
+    tags: ["LangGraph", "FastAPI", "MCP", "Postgres", "OPA"],
+    desc: "A secure agentic orchestration platform built on the Model Context Protocol. Describe a task in natural language and a LangGraph plan-execute-review loop carries it out across 40 tools spanning GitHub, Slack, Jira, Google Drive, and a pgvector knowledge base — with human-in-the-loop approval gates, OPA-based access control, a tamper-evident SHA-256 audit chain, and a real-time streaming dashboard.",
+    link: "https://github.com/arshadvani3/MCP-Gateway",
+  },
+  {
+    title: "AgentMesh",
+    glyph: "02 — p2p agent routing",
+    art: "art-2",
     tags: ["Python", "FastAPI", "LangGraph", "WebSockets"],
     desc: "A peer-to-peer protocol for AI agent discovery, routing, and reputation. Agents register capabilities at startup and are matched at runtime via semantic search, ELO-style trust scoring, and cost-aware routing, with circuit breaker patterns for resilience. Supports three-way negotiation (accept/reject/counter) and WebSocket-based task execution.",
     link: "https://github.com/arshadvani3/AgentMesh",
   },
   {
     title: "AgentProbe",
-    glyph: "02 — llm red-teaming",
-    art: "art-2",
+    glyph: "03 — llm red-teaming",
+    art: "art-3",
     tags: ["LangGraph", "FastAPI", "Postgres", "Groq"],
     desc: "A multi-agent platform that stress-tests any AI agent's HTTP API without needing internal access. Seven coordinated LangGraph agents run a 25-pattern injection battery across 7 categories, score responses on accuracy, hallucination, and safety, and auto-escalate test difficulty when pass rates exceed 90%.",
     link: "https://github.com/arshadvani3/Agentprobe",
   },
   {
     title: "DevDocs AI",
-    glyph: "03 — production rag",
-    art: "art-3",
+    glyph: "04 — production rag",
+    art: "art-4",
     tags: ["Qdrant", "HuggingFace", "Redis", "FastAPI"],
     desc: "A production RAG assistant for asking natural language questions about any codebase. Point it at a GitHub repo and get streaming answers with source citations. AST-aware chunking across 23+ languages, parallel batch embeddings, multi-collection indexing, and two-tier Redis caching for low-latency retrieval.",
     link: "https://github.com/arshadvani3/devdocs-ai",
+  },
+  {
+    title: "Revi IQ",
+    glyph: "05 — applied ml + llm",
+    art: "art-5",
+    tags: ["Python", "LLM", "RecSys", "React"],
+    desc: "One customer-taste model powering three restaurant-network levers: live kiosk upsell with expected-value ranking, cross-restaurant discovery via taste vectors and collaborative filtering, and LLM-generated win-back campaigns with plain-English customer search. Runs end to end with real LLM calls, and every suggestion ships with an explain panel showing the math behind it.",
+    link: "https://github.com/arshadvani3/Revi-IQ",
   },
 ];
 
@@ -415,8 +431,8 @@ function Projects() {
           <div className="sec-eyebrow">selected work</div>
           <h2 className="sec-title">Things I've built.</h2>
           <p className="sec-sub">
-            Three projects sitting at the intersection of LLMs and real systems
-            each one trying to make agents behave like grown-up software.
+            Five projects at the intersection of LLMs and real systems — each
+            one trying to make agents behave like grown-up software.
           </p>
         </div>
         <div className="bento">
