@@ -430,9 +430,9 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 24px 26px;
-    transition: border-color var(--t-fast), transform var(--t-fast);
+    transition: border-color var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
   }
-  .tl-card:hover { border-color: var(--line-hi); transform: translateY(-2px); }
+  .tl-card:hover { border-color: var(--line-hi); transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35); }
   .tl-head {
     display: flex; justify-content: space-between; align-items: baseline;
     flex-wrap: wrap; gap: 8px;
@@ -506,11 +506,55 @@
     text-transform: uppercase;
   }
 
-  .art-1 { background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 50%, #818cf8 100%); }
-  .art-2 { background: linear-gradient(135deg, #042f2e 0%, #0f766e 50%, #5eead4 100%); }
-  .art-3 { background: linear-gradient(135deg, #500724 0%, #be185d 50%, #f9a8d4 100%); }
-  .art-4 { background: linear-gradient(135deg, #451a03 0%, #d97706 50%, #fcd34d 100%); }
-  .art-5 { background: linear-gradient(135deg, #083344 0%, #0e7490 50%, #67e8f9 100%); }
+  .art-1 {
+    background:
+      radial-gradient(120% 90% at 22% 12%, rgba(99, 102, 241, 0.5) 0%, transparent 55%),
+      linear-gradient(150deg, #100e2a 0%, #1c1a45 55%, #2b2870 100%);
+  }
+  .art-2 {
+    background:
+      radial-gradient(110% 90% at 78% 15%, rgba(20, 184, 166, 0.4) 0%, transparent 55%),
+      linear-gradient(150deg, #041b1a 0%, #0a3531 55%, #0f524b 100%);
+  }
+  .art-3 {
+    background:
+      radial-gradient(120% 100% at 25% 85%, rgba(225, 29, 72, 0.38) 0%, transparent 55%),
+      linear-gradient(150deg, #230512 0%, #430a20 55%, #6b1236 100%);
+  }
+  .art-4 {
+    background:
+      radial-gradient(110% 90% at 75% 18%, rgba(217, 119, 6, 0.38) 0%, transparent 55%),
+      linear-gradient(150deg, #1c0e03 0%, #3b1703 55%, #713509 100%);
+  }
+  .art-5 {
+    background:
+      radial-gradient(120% 90% at 25% 18%, rgba(6, 182, 212, 0.38) 0%, transparent 55%),
+      linear-gradient(150deg, #03181f 0%, #072c3a 55%, #0e4a5f 100%);
+  }
+
+  /* Generative art layer */
+  .proj-art svg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    opacity: 0.55;
+    transition: transform var(--t-slow), opacity var(--t-slow);
+  }
+  .proj:hover .proj-art svg { transform: scale(1.05); opacity: 0.8; }
+  .art-anim-dash {
+    stroke-dasharray: 5 7;
+    animation: art-dash 9s linear infinite;
+  }
+  @keyframes art-dash { to { stroke-dashoffset: -120; } }
+  .art-anim-pulse { animation: art-pulse 4.5s ease-in-out infinite; }
+  @keyframes art-pulse {
+    0%, 100% { opacity: 0.35; }
+    50%      { opacity: 0.95; }
+  }
+  .art-anim-scan { animation: art-scan 7s linear infinite; }
+  @keyframes art-scan {
+    from { transform: translateY(-10px); }
+    to   { transform: translateY(310px); }
+  }
 
   /* Bento layout (5 projects) */
   .proj:nth-child(1) { grid-column: span 12; }
@@ -580,9 +624,9 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 26px 28px;
-    transition: border-color var(--t-fast), transform var(--t-fast);
+    transition: border-color var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
   }
-  .edu-card:hover { border-color: var(--line-hi); transform: translateY(-2px); }
+  .edu-card:hover { border-color: var(--line-hi); transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35); }
   .edu-when {
     font-family: var(--font-mono);
     font-size: 11.5px;
@@ -703,6 +747,37 @@
     transition: color var(--t-fast);
   }
   footer .top:hover { color: var(--accent); }
+
+  /* ─── Cursor spotlight (cards) ────────────────────────────── */
+  @media (hover: hover) and (pointer: fine) {
+    .spot { position: relative; }
+    .spot::before, .spot::after {
+      content: "";
+      position: absolute;
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+    /* interior glow following the cursor */
+    .spot::after {
+      inset: 0;
+      background: radial-gradient(480px circle at var(--mx, 50%) var(--my, 50%), var(--accent-soft), transparent 55%);
+    }
+    /* border spotlight — 1px gradient ring via mask compositing */
+    .spot::before {
+      inset: -1px;
+      padding: 1.5px;
+      background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), var(--accent-ring), transparent 60%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+              mask-composite: exclude;
+    }
+    .proj.spot::before { inset: 0; }
+    .spot:hover::before, .spot:hover::after { opacity: 1; }
+  }
 
   /* ─── Reveal ──────────────────────────────────────────────── */
   .reveal {

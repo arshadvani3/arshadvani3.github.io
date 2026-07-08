@@ -119,6 +119,7 @@ const PROJECTS = [
     title: "MCP Gateway",
     glyph: "01 — agentic orchestration",
     art: "art-1",
+    artKind: "graph",
     tags: ["LangGraph", "FastAPI", "MCP", "Postgres", "OPA"],
     desc: "A secure agentic orchestration platform built on the Model Context Protocol. Describe a task in natural language and a LangGraph plan-execute-review loop carries it out across 40 tools spanning GitHub, Slack, Jira, Google Drive, and a pgvector knowledge base — with human-in-the-loop approval gates, OPA-based access control, a tamper-evident SHA-256 audit chain, and a real-time streaming dashboard.",
     link: "https://github.com/arshadvani3/MCP-Gateway",
@@ -127,6 +128,7 @@ const PROJECTS = [
     title: "AgentMesh",
     glyph: "02 — p2p agent routing",
     art: "art-2",
+    artKind: "mesh",
     tags: ["Python", "FastAPI", "LangGraph", "WebSockets"],
     desc: "A peer-to-peer protocol for AI agent discovery, routing, and reputation. Agents register capabilities at startup and are matched at runtime via semantic search, ELO-style trust scoring, and cost-aware routing, with circuit breaker patterns for resilience. Supports three-way negotiation (accept/reject/counter) and WebSocket-based task execution.",
     link: "https://github.com/arshadvani3/AgentMesh",
@@ -135,6 +137,7 @@ const PROJECTS = [
     title: "AgentProbe",
     glyph: "03 — llm red-teaming",
     art: "art-3",
+    artKind: "scan",
     tags: ["LangGraph", "FastAPI", "Postgres", "Groq"],
     desc: "A multi-agent platform that stress-tests any AI agent's HTTP API without needing internal access. Seven coordinated LangGraph agents run a 25-pattern injection battery across 7 categories, score responses on accuracy, hallucination, and safety, and auto-escalate test difficulty when pass rates exceed 90%.",
     link: "https://github.com/arshadvani3/Agentprobe",
@@ -143,6 +146,7 @@ const PROJECTS = [
     title: "DevDocs AI",
     glyph: "04 — production rag",
     art: "art-4",
+    artKind: "docs",
     tags: ["Qdrant", "HuggingFace", "Redis", "FastAPI"],
     desc: "A production RAG assistant for asking natural language questions about any codebase. Point it at a GitHub repo and get streaming answers with source citations. AST-aware chunking across 23+ languages, parallel batch embeddings, multi-collection indexing, and two-tier Redis caching for low-latency retrieval.",
     link: "https://github.com/arshadvani3/devdocs-ai",
@@ -151,6 +155,7 @@ const PROJECTS = [
     title: "Revi IQ",
     glyph: "05 — applied ml + llm",
     art: "art-5",
+    artKind: "taste",
     tags: ["Python", "LLM", "RecSys", "React"],
     desc: "One customer-taste model powering three restaurant-network levers: live kiosk upsell with expected-value ranking, cross-restaurant discovery via taste vectors and collaborative filtering, and LLM-generated win-back campaigns with plain-English customer search. Runs end to end with real LLM calls, and every suggestion ships with an explain panel showing the math behind it.",
     link: "https://github.com/arshadvani3/Revi-IQ",
@@ -162,7 +167,7 @@ const EDUCATION = [
     when: "Jun 2026",
     where: "UC Santa Cruz",
     deg: "M.S. Computer Science",
-    gpa: "GPA · 3.50 / 4.0",
+    gpa: "Santa Cruz, CA",
   },
   {
     when: "Jun 2024",
@@ -198,6 +203,25 @@ function useReveal() {
 }
 
 // ─── Scrollspy + scrolled header ────────────────────────────────────────────
+
+// ─── Cursor spotlight on cards ──────────────────────────────────────────────
+
+function useSpotlight() {
+  useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    const cards = Array.from(document.querySelectorAll(".spot"));
+    const pairs = cards.map((el) => {
+      const onMove = (e) => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty("--mx", (e.clientX - r.left) + "px");
+        el.style.setProperty("--my", (e.clientY - r.top) + "px");
+      };
+      el.addEventListener("mousemove", onMove);
+      return [el, onMove];
+    });
+    return () => pairs.forEach(([el, onMove]) => el.removeEventListener("mousemove", onMove));
+  }, []);
+}
 
 function useScrollspy(ids) {
   const [active, setActive] = useState(ids[0]);
@@ -340,7 +364,7 @@ function About() {
             </p>
             <p>Trying to figure out how to make AI systems that actually work.</p>
           </div>
-          <div className="skills-block reveal">
+          <div className="skills-block spot reveal">
             {SKILLS.map((s) => (
               <div key={s.label} className="skill-cat">
                 <h4>{s.label}</h4>
@@ -372,7 +396,7 @@ function Experience() {
           {EXPERIENCE.map((j) => (
             <div key={j.where} className="tl-item reveal">
               <span className="tl-dot" aria-hidden="true"></span>
-              <div className="tl-card">
+              <div className="tl-card spot">
                 <div className="tl-head">
                   <span className="tl-role">{j.role}</span>
                   <span className="tl-when">{j.when}</span>
@@ -405,7 +429,7 @@ function Leadership() {
           {LEADERSHIP.map((j) => (
             <div key={j.role} className="tl-item reveal">
               <span className="tl-dot" aria-hidden="true"></span>
-              <div className="tl-card">
+              <div className="tl-card spot">
                 <div className="tl-head">
                   <span className="tl-role">{j.role}</span>
                   <span className="tl-when">{j.when}</span>
@@ -423,6 +447,137 @@ function Leadership() {
   );
 }
 
+function ProjectArt({ kind }) {
+  const line = "rgba(255,255,255,0.30)";
+  const dim = "rgba(255,255,255,0.16)";
+
+  if (kind === "graph") {
+    // Hub-and-spoke orchestration graph
+    const hub = [200, 150];
+    const tools = [[70, 55], [325, 65], [55, 225], [340, 215], [150, 35], [255, 265]];
+    return (
+      <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style={{ color: "#a5b4fc" }}>
+        {tools.map(([x, y], i) => (
+          <line key={"e" + i} x1={hub[0]} y1={hub[1]} x2={x} y2={y} stroke={line} strokeWidth="1" className="art-anim-dash" />
+        ))}
+        <line x1={tools[0][0]} y1={tools[0][1]} x2={tools[4][0]} y2={tools[4][1]} stroke={dim} strokeWidth="1" />
+        <line x1={tools[1][0]} y1={tools[1][1]} x2={tools[3][0]} y2={tools[3][1]} stroke={dim} strokeWidth="1" />
+        {tools.map(([x, y], i) => (
+          <rect key={"t" + i} x={x - 7} y={y - 7} width="14" height="14" rx="3"
+                fill="none" stroke={line} strokeWidth="1.2" />
+        ))}
+        <circle cx={hub[0]} cy={hub[1]} r="26" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.5" className="art-anim-pulse" />
+        <circle cx={hub[0]} cy={hub[1]} r="11" fill="none" stroke="currentColor" strokeWidth="1.6" />
+        <circle cx={hub[0]} cy={hub[1]} r="3.5" fill="currentColor" />
+      </svg>
+    );
+  }
+
+  if (kind === "mesh") {
+    // Decentralized p2p mesh — no center
+    const nodes = [[55, 70], [150, 45], [265, 60], [355, 105], [90, 165], [200, 140], [310, 175], [60, 255], [175, 250], [290, 260], [365, 230]];
+    const edges = [[0, 1], [1, 2], [2, 3], [0, 4], [1, 5], [2, 5], [3, 6], [4, 5], [5, 6], [4, 7], [5, 8], [6, 9], [7, 8], [8, 9], [9, 10], [6, 10], [2, 6], [4, 8]];
+    return (
+      <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style={{ color: "#5eead4" }}>
+        {edges.map(([a, b], i) => (
+          <line key={i} x1={nodes[a][0]} y1={nodes[a][1]} x2={nodes[b][0]} y2={nodes[b][1]}
+                stroke={i % 4 === 0 ? line : dim} strokeWidth="1" />
+        ))}
+        {nodes.map(([x, y], i) => (
+          <circle key={"n" + i} cx={x} cy={y} r={i % 3 === 0 ? 5 : 3.5}
+                  fill={i % 5 === 0 ? "currentColor" : "none"}
+                  stroke={i % 5 === 0 ? "none" : line} strokeWidth="1.3"
+                  className={i % 3 === 1 ? "art-anim-pulse" : undefined}
+                  style={i % 3 === 1 ? { animationDelay: (i * 0.6) + "s" } : undefined} />
+        ))}
+      </svg>
+    );
+  }
+
+  if (kind === "scan") {
+    // Red-team scan — scanlines + crosshair
+    return (
+      <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style={{ color: "#fda4af" }}>
+        {[30, 70, 110, 150, 190, 230, 270].map((y) => (
+          <line key={y} x1="0" y1={y} x2="400" y2={y} stroke={dim} strokeWidth="1" />
+        ))}
+        <g className="art-anim-scan">
+          <rect x="0" y="0" width="400" height="2" fill="currentColor" opacity="0.55" />
+        </g>
+        <g fill="none" stroke="currentColor" strokeWidth="1.4">
+          <circle cx="272" cy="118" r="34" opacity="0.85" />
+          <circle cx="272" cy="118" r="14" opacity="0.6" />
+          <line x1="272" y1="72" x2="272" y2="94" />
+          <line x1="272" y1="142" x2="272" y2="164" />
+          <line x1="226" y1="118" x2="248" y2="118" />
+          <line x1="296" y1="118" x2="318" y2="118" />
+        </g>
+        <g fill="none" stroke={line} strokeWidth="1.6">
+          <path d="M52 84 h-14 v40 h14" />
+          <path d="M118 84 h14 v40 h-14" />
+        </g>
+        <g fill={line} fontFamily="monospace" fontSize="11">
+          <text x="48" y="228">&gt;_ inject 25/25</text>
+        </g>
+      </svg>
+    );
+  }
+
+  if (kind === "docs") {
+    // Code lattice — indented lines with citation ticks
+    const rows = [
+      [36, 30, 150], [36, 54, 210], [64, 78, 120], [64, 102, 180], [92, 126, 96],
+      [64, 150, 200], [36, 174, 160], [64, 198, 140], [36, 222, 230], [64, 246, 110],
+    ];
+    return (
+      <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style={{ color: "#fcd34d" }}>
+        {rows.map(([x, y, w], i) => (
+          <rect key={i} x={x} y={y} width={w} height="9" rx="4.5"
+                fill={i === 3 || i === 8 ? "currentColor" : "none"}
+                stroke={i === 3 || i === 8 ? "none" : (i % 2 ? line : dim)}
+                strokeWidth="1.2"
+                opacity={i === 3 || i === 8 ? 0.75 : 1}
+                className={i === 3 || i === 8 ? "art-anim-pulse" : undefined}
+                style={i === 8 ? { animationDelay: "2s" } : undefined} />
+        ))}
+        <g stroke="currentColor" strokeWidth="1.4" opacity="0.7">
+          <line x1="330" y1="102" x2="344" y2="102" />
+          <line x1="330" y1="246" x2="344" y2="246" />
+        </g>
+        <g fill={line} fontFamily="monospace" fontSize="11">
+          <text x="330" y="92">[1]</text>
+          <text x="330" y="236">[2]</text>
+        </g>
+      </svg>
+    );
+  }
+
+  // taste — dot clusters joined by soft arcs
+  const clusters = [
+    { c: [95, 85], pts: [[70, 60], [118, 55], [128, 95], [78, 112], [100, 82]] },
+    { c: [300, 120], pts: [[275, 95], [328, 100], [318, 148], [270, 140], [298, 118]] },
+    { c: [185, 235], pts: [[160, 212], [212, 215], [205, 258], [162, 255], [186, 232]] },
+  ];
+  return (
+    <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style={{ color: "#67e8f9" }}>
+      <g fill="none" stroke={line} strokeWidth="1" className="art-anim-dash">
+        <path d="M95 85 Q 200 30 300 120" />
+        <path d="M300 120 Q 290 210 185 235" />
+        <path d="M95 85 Q 90 190 185 235" />
+      </g>
+      {clusters.map((cl, ci) =>
+        cl.pts.map(([x, y], i) => (
+          <circle key={ci + "-" + i} cx={x} cy={y} r={i === 4 ? 6 : 3}
+                  fill={i === 4 ? "currentColor" : "none"}
+                  stroke={i === 4 ? "none" : line} strokeWidth="1.2"
+                  className={i === 4 ? "art-anim-pulse" : undefined}
+                  style={i === 4 ? { animationDelay: (ci * 1.3) + "s" } : undefined} />
+        ))
+      )}
+    </svg>
+  );
+}
+
 function Projects() {
   return (
     <section id="projects" className="section section--alt" data-screen-label="04 Projects">
@@ -437,8 +592,9 @@ function Projects() {
         </div>
         <div className="bento">
           {PROJECTS.map((p) => (
-            <a key={p.title} href={p.link} target="_blank" rel="noreferrer" className="proj reveal">
+            <a key={p.title} href={p.link} target="_blank" rel="noreferrer" className="proj spot reveal">
               <div className={"proj-art " + p.art}>
+                <ProjectArt kind={p.artKind} />
                 <span className="glyph">{p.glyph}</span>
               </div>
               <div className="proj-body">
@@ -472,7 +628,7 @@ function Education() {
         </div>
         <div className="edu-grid">
           {EDUCATION.map((e) => (
-            <div key={e.where} className="edu-card reveal">
+            <div key={e.where} className="edu-card spot reveal">
               <div className="edu-when">{e.when}</div>
               <div className="edu-where">{e.where}</div>
               <div className="edu-deg">{e.deg}</div>
@@ -544,7 +700,7 @@ function Contact() {
               direct: <a href="mailto:arshadvani3@gmail.com">arshadvani3@gmail.com</a>
             </div>
           </div>
-          <div className="form-wrap reveal">
+          <div className="form-wrap spot reveal">
             <form onSubmit={onSubmit}>
               <div className="field">
                 <input id="cf-name" name="name" type="text" placeholder=" " required />
@@ -589,6 +745,7 @@ function Footer() {
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   useReveal();
+  useSpotlight();
 
   useEffect(() => {
     const a = ACCENTS[t.accent] || ACCENTS.indigo;
